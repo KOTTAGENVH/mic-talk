@@ -1,0 +1,23 @@
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: currentColor;
+    border-radius: 100%;
+    position: absolute;
+  }
+  
+  .dot1 {
+    width: 18px;
+    height: 8px;
+    background-color: currentColor;
+    border-radius: 100%;
+    position: absolute;
+  }
+  
+  .dot2 {
+    width: 8px;
+    height: 28px;
+    background-color: currentColor;
+    border-radius: 100%;
+    position: absolute;
+  }
