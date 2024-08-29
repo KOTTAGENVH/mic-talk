@@ -11,6 +11,8 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "light_background": "url('/images/lightbackground.jpg')",
+        "dark_background": "url('/images/darkbackground.jpg')",
       },
       keyframes: {
         wave1: {
