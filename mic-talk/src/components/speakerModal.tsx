@@ -1,4 +1,5 @@
 "use client";
+
 // Import necessary hooks and components
 import React, { useState, useEffect } from 'react';
 import { useSpeaker } from '@/contextApi/speakerContext';
@@ -21,12 +22,17 @@ const SpeakerModal = ({
       setLoading(true);
       try {
         const devices = await navigator.mediaDevices.enumerateDevices();
-        setDevices(devices.filter(device => device.kind === 'audiooutput'));
+        const audioOutputDevices = devices.filter(device => device.kind === 'audiooutput');
+        if (audioOutputDevices.length === 0) {
+          console.warn('No audio output devices found');
+        }
+        setDevices(audioOutputDevices);
       } catch (error) {
         console.error('Error fetching devices:', error);
       }
       setLoading(false);
     };
+
     if (isOpen) {
       getDevices();
     }
