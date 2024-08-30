@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://mictalk.nowenkottage.com
+
+# Sitemaps
+Sitemap: https://mictalk.nowenkottage.com/sitemap.xml
