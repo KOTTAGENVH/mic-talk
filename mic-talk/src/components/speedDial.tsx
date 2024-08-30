@@ -20,8 +20,12 @@ const SpeedDial: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogoClick = () => {
+  const handleKarokeClick = () => {
     router.push("/karoke");
+  };
+
+  const handleHomeClick = () => {
+    router.push("/");
   };
 
   const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,9 +75,19 @@ const SpeedDial: React.FC = () => {
                 ? "text-white py-2 px-4 hover:bg-blue-600 rounded"
                 : "text-black py-2 px-4 hover:bg-blue-400 rounded"
             }
-            onClick={handleLogoClick}
+            onClick={handleKarokeClick}
           >
             Karoke
+          </button>
+          <button
+            className={
+              darkMode
+                ? "text-white py-2 px-4 hover:bg-blue-600 rounded"
+                : "text-black py-2 px-4 hover:bg-blue-400 rounded"
+            }
+            onClick={handleHomeClick}
+          >
+            Home
           </button>
         </div>
       )}
@@ -88,7 +102,6 @@ const SpeedDial: React.FC = () => {
       >
         <LuMenuSquare />
       </button>
-      <audio ref={audioRef} src="/path/to/your/audio/file.mp3" autoPlay loop />
     </div>
   );
 };

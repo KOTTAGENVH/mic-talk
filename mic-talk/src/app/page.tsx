@@ -1,5 +1,4 @@
 "use client";
-// Import necessary hooks and components
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import "../css/mic.css";
@@ -91,14 +90,15 @@ const Home: React.FC = () => {
     const draw = () => {
       if (!ctx || !dataArrayRef.current || !analyserRef.current) return;
       analyserRef.current.getByteFrequencyData(dataArrayRef.current);
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height); 
+      ctx.fillStyle = darkMode ? "white" : "black";
       dataArrayRef.current.forEach((value, i) => {
         ctx.fillRect(
           i * 12,
           canvas.height,
           10,
           -(value * (canvas.height / 256))
-        ); // Draw each bar
+        ); 
       });
       requestAnimationRef.current = requestAnimationFrame(draw);
     };

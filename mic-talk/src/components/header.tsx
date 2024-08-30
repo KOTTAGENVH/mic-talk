@@ -22,12 +22,12 @@ function Header() {
   return (
     <div className="sticky top-0">
       <nav className="flex items-center justify-between  bg-transparent bg-opacity-30 backdrop-blur-md p-2 ">
-        <div className="flex flex-row items-center flex-shrink-0 text-white">
+        <div className="flex flex-row items-center flex-shrink-0 ">
           <button
             className={
               darkMode
-                ? "text-white bg-transparent hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
-                : "text-black bg-transparent hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-lg"
+                ? "text-white bg-transparent hover:bg-blue-600  font-bold py-2 px-4 rounded-lg"
+                : "text-black bg-transparent hover:bg-blue-400  font-bold py-2 px-4 rounded-lg"
             }
             onClick={toggleSpeakerModal}
             aria-label="SpeakerChanger"
@@ -37,8 +37,8 @@ function Header() {
           <button
             className={
               darkMode
-                ? "text-white bg-transparent hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
-                : "text-black bg-transparent hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-lg"
+                ? "text-white bg-transparent hover:bg-blue-600  font-bold py-2 px-4 rounded-lg"
+                : "text-black bg-transparent hover:bg-blue-400 font-bold py-2 px-4 rounded-lg"
             }
             onClick={toggleMicModal}
             aria-label="MicrophoneChanger"
@@ -48,11 +48,11 @@ function Header() {
           <button
             className={
               darkMode
-                ? "text-white bg-transparent hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
-                : "text-black bg-transparent hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-lg"
+                ? "bg-transparent hover:bg-blue-600  font-bold py-2 px-4 rounded-lg text-white"
+                : "bg-transparent hover:bg-blue-400  font-bold py-2 px-4 rounded-lg text-black "
             }
             onClick={toggleDarkMode}
-            aria-label="Open Menu"
+            aria-label="DarkMode"
           >
             <CgDarkMode />
           </button>
@@ -70,14 +70,12 @@ function Header() {
             style={{ borderRadius: "60%" }}
           />
         </div>
-        <div 
-             className={
-              darkMode
-              ? "text-white"
-              : "text-black"
-            }
-        >
-          <p>T&C</p>
+        <div className={darkMode ? "text-white" : "text-black"}>
+          <a
+            href="/legal"
+          >
+            T&C
+          </a>
         </div>
       </nav>
     </div>
