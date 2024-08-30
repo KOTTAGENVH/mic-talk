@@ -10,7 +10,7 @@ const inter = Inter({
   weight: ["400", "700"],
 });
 
-function page() {
+function Page() {
   const { darkMode } = useTheme();
   return (
     <div
@@ -85,4 +85,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
