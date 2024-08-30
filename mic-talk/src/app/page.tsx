@@ -87,11 +87,16 @@ const Home: React.FC = () => {
   const animateAudioVisualizer = () => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
+  
+    if (!canvas || !ctx || !dataArrayRef.current || !analyserRef.current) return;
+  
     const draw = () => {
-      if (!ctx || !dataArrayRef.current || !analyserRef.current) return;
+      if (!dataArrayRef.current || !analyserRef.current) return;
+  
       analyserRef.current.getByteFrequencyData(dataArrayRef.current);
       ctx.clearRect(0, 0, canvas.width, canvas.height); 
       ctx.fillStyle = darkMode ? "white" : "black";
+  
       dataArrayRef.current.forEach((value, i) => {
         ctx.fillRect(
           i * 12,
@@ -100,10 +105,12 @@ const Home: React.FC = () => {
           -(value * (canvas.height / 256))
         ); 
       });
+  
       requestAnimationRef.current = requestAnimationFrame(draw);
     };
     draw();
   };
+  
 
   const stopAudioProcessing = () => {
     if (requestAnimationRef.current)
