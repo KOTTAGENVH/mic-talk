@@ -15,7 +15,7 @@ import { IoSearchCircle } from "react-icons/io5";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Karaoke } from "@/Api/services/karoke";
-import AdBanner from "@/components/adbanner";
+
 
 const Page: React.FC = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -34,8 +34,6 @@ const Page: React.FC = () => {
   const { selectedSpeaker } = useSpeaker();
   const { selectedMic } = useMicrophone();
   const { volume } = useVolume();
-  const adClient = process.env.AD_CLIENT as string;
-  const adSlot = process.env.AD_SLOT as string;
 
   // Handle the click event on song search
   const handleSearch = async () => {
@@ -236,13 +234,6 @@ const Page: React.FC = () => {
         >
           {responseSong}
         </p>
-        <div className="bg-black mt-5">
-          <AdBanner
-            dataAdFormat="auto"
-            dataFullWidthResponsive={true}
-            dataAdSlot={adSlot}
-          />
-        </div>
       </div>
       <MicrophoneModal isOpen={isMicModalOpen} onClose={toggleMicModal} />
       <SpeakerModal isOpen={isSpeakerModalOpen} onClose={toggleSpeakerModal} />

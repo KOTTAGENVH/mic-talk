@@ -22,10 +22,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-         <head>
-        <AdSense pId={adClient}/>
-      </head>
       <body className={inter.className}>
+      <AdSense />
         <VolumeProvider>
           <SpeakerProvider>
             <ModalProvider>
