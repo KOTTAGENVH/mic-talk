@@ -34,7 +34,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (!isClicked) return;
-
+  
     const setupAudio = async () => {
       if (!audioContextRef.current) {
         const audioContext = new AudioContext();
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
         analyserRef.current = analyser;
         gainNodeRef.current = gainNode;
         dataArrayRef.current = new Uint8Array(analyser.frequencyBinCount);
-
+  
         try {
           const audioConstraints = {
             audio: selectedMic ? { deviceId: { exact: selectedMic.deviceId } } : true,
@@ -52,33 +52,35 @@ const Home: React.FC = () => {
           const stream = await navigator.mediaDevices.getUserMedia(audioConstraints);
           const source = audioContext.createMediaStreamSource(stream);
           const destination = audioContext.createMediaStreamDestination();
-
+  
           source.connect(analyser);
           analyser.connect(gainNode);
           gainNode.connect(destination);
-
+  
           gainNode.gain.value = volume; // Control volume
-
+  
           const audioElement = new Audio();
           audioElement.srcObject = destination.stream;
+  
+          // Avoid setting sink ID if the system already handles the output correctly
           if (selectedSpeaker && "setSinkId" in audioElement) {
             await audioElement.setSinkId(selectedSpeaker.deviceId);
             console.log(`Output device set to ${selectedSpeaker.label}`);
-            audioElement.play();
           } else {
-            console.warn("Speaker setup not supported or speaker not selected.");
-            audioElement.play();  // Fallback to default device
+            console.warn("Speaker setup not supported, speaker not selected, or using system default.");
           }
-
+  
+          audioElement.play();
+  
           animateAudioVisualizer();
         } catch (error) {
           console.error("Error accessing the microphone:", error);
         }
       }
     };
-
+  
     setupAudio();
-
+  
     return () => {
       if (audioContextRef.current) {
         audioContextRef.current.close();
@@ -86,6 +88,7 @@ const Home: React.FC = () => {
       }
     };
   }, [isClicked, selectedMic, selectedSpeaker, volume]);
+  
 
   const animateAudioVisualizer = () => {
     const canvas = canvasRef.current;
