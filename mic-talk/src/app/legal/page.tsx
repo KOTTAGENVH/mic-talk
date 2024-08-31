@@ -72,15 +72,15 @@ function Page() {
             or engage in unlawful activities.
             <br />
             12. Ads displayed in Mic-Talk are sourced from Adsterra, and I am not
-            responsible for their content.
+            responsible for their content 
             <a href="https://adsterra.com//">https://adsterra.com//</a>.
             <br />
             13. Karaoke lyrics in Mic-Talk are sourced from{" "}
             <a href="https://lyrics.ovh/">https://lyrics.ovh/</a>.
             <br />
-            14. Mictalk is only tested on Desktop Devices and on browsers like Chrome and Brave.
+            14. Mic-Talk is only tested on Desktop Devices and on browsers like Chrome and Brave.
             <br />
-            15. By using Mictalk you agree to the above mentioned terms and conditions.
+            15. By using Mic-Talk you agree to the above mentioned terms and conditions.
           </p>
         </div>
       </div>
