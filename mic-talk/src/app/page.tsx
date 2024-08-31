@@ -65,18 +65,7 @@ const Home: React.FC = () => {
             await audioElement.setSinkId(selectedSpeaker.deviceId);
             console.log(`Output device set to ${selectedSpeaker.label}`);
             audioElement.play();
-          } else if ("setSinkId" in audioElement) {
-            const devices = await navigator.mediaDevices.enumerateDevices();
-            const defaultExternalDevice = devices.find(device => device.kind === 'audiooutput' && device.deviceId !== 'default');
-            if (defaultExternalDevice) {
-              await audioElement.setSinkId(defaultExternalDevice.deviceId);
-              console.log(`Output device set to default external speaker: ${defaultExternalDevice.label}`);
-            } else {
-              console.warn("No external speaker found, using default device.");
-            }
-            audioElement.play();
           } else {
-            const audioElement = new Audio();
             console.warn("Speaker setup not supported or speaker not selected.");
             audioElement.play();  
           }
