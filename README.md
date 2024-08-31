@@ -1,5 +1,5 @@
 # Mic-Me
-###Installation
+### Installation & Setup
 >1. Clone the project
 >2. cd mic-talk
 >3. npm i
