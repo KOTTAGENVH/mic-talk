@@ -32,7 +32,8 @@ const AdSense = () => {
             scrolling="no"
             width="100%"
             height="100%"
-          />
+            allow="autoplay; muted"
+          ></iframe>
         )}
         <button
           onClick={handleMinimize}
