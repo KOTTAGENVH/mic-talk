@@ -6,8 +6,6 @@ import { MicrophoneProvider } from "@/contextApi/microphoneContext";
 import { ModalProvider } from "@/contextApi/modalContext";
 import { SpeakerProvider } from "@/contextApi/speakerContext";
 import { VolumeProvider } from "@/contextApi/volumeContext";
-import AdSense from "@/components/adsense";
-import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 const adClient = process.env.AD_CLIENT as string;

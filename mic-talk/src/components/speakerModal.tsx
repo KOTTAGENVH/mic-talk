@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useSpeaker } from '@/contextApi/speakerContext';
-import { useTheme } from '@/contextApi/darkmodeContext';
+import React, { useState, useEffect } from "react";
+import { useSpeaker } from "@/contextApi/speakerContext";
+import { useTheme } from "@/contextApi/darkmodeContext";
 
 const SpeakerModal = ({
   isOpen,
@@ -21,13 +21,15 @@ const SpeakerModal = ({
       setLoading(true);
       try {
         const devices = await navigator.mediaDevices.enumerateDevices();
-        const audioOutputDevices = devices.filter(device => device.kind === 'audiooutput');
+        const audioOutputDevices = devices.filter(
+          (device) => device.kind === "audiooutput"
+        );
         if (audioOutputDevices.length === 0) {
-          console.warn('No audio output devices found');
+          console.warn("No audio output devices found");
         }
         setDevices(audioOutputDevices);
       } catch (error) {
-        console.error('Error fetching devices:', error);
+        console.error("Error fetching devices:", error);
       }
       setLoading(false);
     };
@@ -39,19 +41,21 @@ const SpeakerModal = ({
 
   const handleSelectSpeaker = async (device: MediaDeviceInfo) => {
     setSelectedSpeaker(device);
-    onClose(); // Close the modal
-    
-    // Assuming you have a reference to an HTML audio or video element, adjust as necessary
-    const mediaElement = document.querySelector('audio') || document.querySelector('video');
+    onClose();
+
+    const mediaElement =
+      document.querySelector("audio") || document.querySelector("video");
     if (mediaElement && mediaElement.setSinkId && device.deviceId) {
       try {
         await mediaElement.setSinkId(device.deviceId);
         console.log(`Audio output device set to ${device.label}`);
       } catch (error) {
-        console.error('Failed to set audio output device:', error);
+        console.error("Failed to set audio output device:", error);
       }
     } else {
-      console.error('setSinkId is not supported by this browser or media element is not found');
+      console.error(
+        "setSinkId is not supported by this browser or media element is not found"
+      );
     }
   };
 

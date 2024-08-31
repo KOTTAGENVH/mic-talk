@@ -1,9 +1,7 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 
 const AdSense = () => {
-  const adUrl = process.env.ADSTERRA_AD_URL;
   const [isMinimized, setIsMinimized] = useState(false);
   const [iframeSrc, setIframeSrc] = useState<string | undefined>(undefined);
 

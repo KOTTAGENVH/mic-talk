@@ -29,7 +29,7 @@ const SpeedDial: React.FC = () => {
   };
 
   const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setVolume(parseFloat(event.target.value) / 100); 
+    setVolume(parseFloat(event.target.value) / 100);
   };
 
   const getVolumeIcon = () => {
