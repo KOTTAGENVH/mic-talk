@@ -1,6 +1,5 @@
 "use client";
 
-// Import necessary hooks and components
 import React, { useState, useEffect } from 'react';
 import { useSpeaker } from '@/contextApi/speakerContext';
 import { useTheme } from '@/contextApi/darkmodeContext';

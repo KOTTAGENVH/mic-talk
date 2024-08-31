@@ -25,8 +25,8 @@ function Page() {
         <div
           className={
             darkMode
-              ? "text-white bg-opacity-50 backdrop-blur-md h-4/5 w-10/12 xl:w-11/12 m-4 mt-8 xl:m-12 p-8 rounded-2xl"
-              : "text-black bg-opacity-50 backdrop-blur-md h-4/5 w-10/12 xl:w-11/12 m-4 mt-8 xl:m-12 p-8 rounded-2xl"
+              ? "text-white bg-opacity-50 backdrop-blur-md h-4/5 w-10/12 xl:w-11/12 m-4 mt-8 xl:m-12 p-8 rounded-2xl overflow-y-auto"
+              : "text-black bg-opacity-50 backdrop-blur-md h-4/5 w-10/12 xl:w-11/12 m-4 mt-8 xl:m-12 p-8 rounded-2xl overflow-y-auto"
           }
         >
           <p
@@ -35,8 +35,7 @@ function Page() {
             Terms & Conditions
           </p>
           <p className={`${inter.className} text-sm xl:text-xl m-2 text-left`}>
-            1. I am not responsible for any damage caused to you by our
-            product.
+            1. I am not responsible for any damage caused to you by our product.
             <br />
             2. All the images in Mic-Talk were sourced from Dalle-E.
             <br />
