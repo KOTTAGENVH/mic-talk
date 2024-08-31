@@ -59,7 +59,7 @@ const Home: React.FC = () => {
 
           gainNode.gain.value = volume; // Control volume
 
-          const audioElement = new Audio() as HTMLAudioElement;
+          const audioElement = new Audio();
           audioElement.srcObject = destination.stream;
           if (selectedSpeaker && "setSinkId" in audioElement) {
             await audioElement.setSinkId(selectedSpeaker.deviceId);
@@ -76,7 +76,7 @@ const Home: React.FC = () => {
             }
             audioElement.play();
           } else {
-            const audioElement = new Audio() as HTMLAudioElement;
+            const audioElement = new Audio();
             console.warn("Speaker setup not supported or speaker not selected.");
             audioElement.play();  
           }
