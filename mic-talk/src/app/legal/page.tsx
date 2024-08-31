@@ -79,6 +79,8 @@ function Page() {
             <a href="https://lyrics.ovh/">https://lyrics.ovh/</a>.
             <br />
             14. Mictalk is only tested on Desktop Devices and on browsers like Chrome and Brave.
+            <br />
+            15. By using Mictalk you agree to the above mentioned terms and conditions.
           </p>
         </div>
       </div>
