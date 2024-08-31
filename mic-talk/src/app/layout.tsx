@@ -24,9 +24,6 @@ export default function RootLayout({
   const source = process.env.ADSTERRA_SRC as string;
   return (
     <html lang="en">
-      <head>
-        <Script src={source} strategy="afterInteractive" async />
-      </head>
       <body className={inter.className}>
         <VolumeProvider>
           <SpeakerProvider>
