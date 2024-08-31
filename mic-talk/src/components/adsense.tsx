@@ -5,14 +5,14 @@ import React, { useEffect, useState } from "react";
 const AdSense = () => {
   const adUrl = process.env.ADSTERRA_AD_URL;
   const [isMinimized, setIsMinimized] = useState(false);
-  const [iframeSrc, setIframeSrc] = useState<string | null>(null);
+  const [iframeSrc, setIframeSrc] = useState<string | undefined>(undefined);
 
   const handleMinimize = () => {
     setIsMinimized(!isMinimized);
   };
 
   useEffect(() => {
-    setIframeSrc(process.env.NEXT_PUBLIC_ADSTERRA_SRC || null);
+    setIframeSrc(process.env.NEXT_PUBLIC_ADSTERRA_SRC || undefined);
     console.log(iframeSrc);
   }, []);
 
