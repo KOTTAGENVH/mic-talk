@@ -7,6 +7,7 @@ import { ModalProvider } from "@/contextApi/modalContext";
 import { SpeakerProvider } from "@/contextApi/speakerContext";
 import { VolumeProvider } from "@/contextApi/volumeContext";
 import AdSense from "@/components/adsense";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 const adClient = process.env.AD_CLIENT as string;
@@ -20,17 +21,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const source = process.env.ADSTERRA_SRC as string;
   return (
     <html lang="en">
+      <head>
+        <Script src={source} strategy="afterInteractive" async />
+      </head>
       <body className={inter.className}>
-      <AdSense />
+        <AdSense />
         <VolumeProvider>
           <SpeakerProvider>
             <ModalProvider>
               <MicrophoneProvider>
-                <ThemeProvider>
-                  {children}
-                </ThemeProvider>
+                <ThemeProvider>{children}</ThemeProvider>
               </MicrophoneProvider>
             </ModalProvider>
           </SpeakerProvider>

@@ -1,27 +1,23 @@
 "use client";
-import Script from "next/script";
-import React, { useState } from "react";
 
-type AdsenseTypes = {
-  pId: string;
-};
+import React, { useEffect, useState } from "react";
 
 const AdSense = () => {
-  const source = process.env.ADSTERRA_SRC as string;
+  const adUrl = process.env.ADSTERRA_AD_URL;
   const [isMinimized, setIsMinimized] = useState(false);
+  const [iframeSrc, setIframeSrc] = useState<string | null>(null);
 
   const handleMinimize = () => {
     setIsMinimized(!isMinimized);
   };
 
+  useEffect(() => {
+    setIframeSrc(process.env.NEXT_PUBLIC_ADSTERRA_SRC || null);
+    console.log(iframeSrc);
+  }, []);
+
   return (
     <>
-      <Script
-        type="text/javascript"
-        src={source}
-        strategy="lazyOnload" // Lazy load the script
-      />
-      {/* Ad Container with minimize functionality */}
       <div
         id="ad-container"
         className={`fixed bottom-0 w-full ${
@@ -29,9 +25,16 @@ const AdSense = () => {
         } bg-gray-100 p-2 shadow-lg flex justify-between items-center`}
         style={{ transition: "height 0.3s" }}
       >
-        <div className={`flex-grow ${isMinimized ? "hidden" : "block"}`}>
-          {/* This is where the Adsterra ad will load */}
-        </div>
+        {/* Conditionally display the iframe if not minimized */}
+        {!isMinimized && (
+          <iframe
+            src={iframeSrc}
+            frameBorder="0"
+            scrolling="no"
+            width="100%"
+            height="100%"
+          />
+        )}
         <button
           onClick={handleMinimize}
           className="text-sm text-blue-500 hover:underline ml-2"
