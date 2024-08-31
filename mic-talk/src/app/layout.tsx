@@ -28,7 +28,6 @@ export default function RootLayout({
         <Script src={source} strategy="afterInteractive" async />
       </head>
       <body className={inter.className}>
-        <AdSense />
         <VolumeProvider>
           <SpeakerProvider>
             <ModalProvider>

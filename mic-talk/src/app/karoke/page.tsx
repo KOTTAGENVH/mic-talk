@@ -15,6 +15,7 @@ import { IoSearchCircle } from "react-icons/io5";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Karaoke } from "@/Api/services/karoke";
+import AdSense from "@/components/adsense";
 
 
 const Page: React.FC = () => {
@@ -113,7 +114,7 @@ const Page: React.FC = () => {
             console.warn("Speaker setup not supported or speaker not selected.");
             audioElement.play();  // Fallback to default device
           }
-          
+
         } catch (error) {
           console.error("Error accessing the microphone:", error);
         }
@@ -242,6 +243,7 @@ const Page: React.FC = () => {
       <MicrophoneModal isOpen={isMicModalOpen} onClose={toggleMicModal} />
       <SpeakerModal isOpen={isSpeakerModalOpen} onClose={toggleSpeakerModal} />
       <SpeedDial />
+      <AdSense />
     </div>
   );
 };
