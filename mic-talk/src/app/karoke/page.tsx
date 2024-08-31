@@ -109,7 +109,11 @@ const Page: React.FC = () => {
             await audioElement.setSinkId(selectedSpeaker.deviceId);
             console.log(`Output device set to ${selectedSpeaker.label}`);
             audioElement.play();
+          }else {
+            console.warn("Speaker setup not supported or speaker not selected.");
+            audioElement.play();  // Fallback to default device
           }
+          
         } catch (error) {
           console.error("Error accessing the microphone:", error);
         }

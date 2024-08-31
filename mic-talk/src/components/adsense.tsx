@@ -25,7 +25,6 @@ const AdSense = () => {
         } bg-gray-100 p-2 shadow-lg flex justify-between items-center`}
         style={{ transition: "height 0.3s" }}
       >
-        {/* Conditionally display the iframe if not minimized */}
         {!isMinimized && (
           <iframe
             src={iframeSrc}
