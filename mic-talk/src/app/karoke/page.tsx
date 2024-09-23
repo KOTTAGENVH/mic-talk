@@ -15,6 +15,7 @@ import { IoSearchCircle } from "react-icons/io5";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Karaoke } from "@/Api/services/karoke";
+import AdSterra from "@/components/adSterra";
 
 
 const Page: React.FC = () => {
@@ -242,6 +243,7 @@ const Page: React.FC = () => {
       <MicrophoneModal isOpen={isMicModalOpen} onClose={toggleMicModal} />
       <SpeakerModal isOpen={isSpeakerModalOpen} onClose={toggleSpeakerModal} />
       <SpeedDial />
+      <AdSterra />
     </div>
   );
 };
