@@ -6,6 +6,7 @@ import { MicrophoneProvider } from "@/contextApi/microphoneContext";
 import { ModalProvider } from "@/contextApi/modalContext";
 import { SpeakerProvider } from "@/contextApi/speakerContext";
 import { VolumeProvider } from "@/contextApi/volumeContext";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,10 @@ export default function RootLayout({
             </ModalProvider>
           </SpeakerProvider>
         </VolumeProvider>
+        <Script
+            src={process.env.NEXT_PUBLIC_ADSTERRA_SRC}
+            strategy="lazyOnload"
+          />
       </body>
     </html>
   );
