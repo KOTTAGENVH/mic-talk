@@ -21,22 +21,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={inter.className}>
-      <VolumeProvider>
-        <SpeakerProvider>
-          <ModalProvider>
-            <MicrophoneProvider>
-              <ThemeProvider>
-                {children}
-                <Script
-                  src={process.env.NEXT_PUBLIC_ADSTERRA_SRC}
-                  strategy="lazyOnload"
-                />
-              </ThemeProvider>
-            </MicrophoneProvider>
-          </ModalProvider>
-        </SpeakerProvider>
-      </VolumeProvider>
-    </div>
+    <html lang="en">
+      <body className={inter.className}>
+        <VolumeProvider>
+          <SpeakerProvider>
+            <ModalProvider>
+              <MicrophoneProvider>
+                <ThemeProvider>{children}</ThemeProvider>
+              </MicrophoneProvider>
+            </ModalProvider>
+          </SpeakerProvider>
+        </VolumeProvider>
+        <Script
+            src={process.env.NEXT_PUBLIC_ADSTERRA_SRC}
+            strategy="lazyOnload"
+          />
+      </body>
+    </html>
   );
 }
