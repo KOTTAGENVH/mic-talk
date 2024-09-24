@@ -23,6 +23,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        {/* Ban inspect elements */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              document.addEventListener("contextmenu", function(event) {
+                event.preventDefault();
+                alert("Inspect Elements Not Allowed!");
+              });
+            `,
+          }}
+        />
         <VolumeProvider>
           <SpeakerProvider>
             <ModalProvider>
@@ -33,9 +44,9 @@ export default function RootLayout({
           </SpeakerProvider>
         </VolumeProvider>
         <Script
-            src={process.env.NEXT_PUBLIC_ADSTERRA_SRC}
-            strategy="lazyOnload"
-          />
+          src={process.env.NEXT_PUBLIC_ADSTERRA_SRC}
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );
