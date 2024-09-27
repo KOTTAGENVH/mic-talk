@@ -11,7 +11,6 @@ import SpeakerModal from "@/components/speakerModal";
 import { useSpeaker } from "@/contextApi/speakerContext";
 import { useMicrophone } from "@/contextApi/microphoneContext";
 import { useVolume } from "@/contextApi/volumeContext";
-import AdSterra from "@/components/adSterra";
 
 // Define the Home component
 const Home: React.FC = () => {
@@ -222,7 +221,6 @@ const Home: React.FC = () => {
       <MicrophoneModal isOpen={isMicModalOpen} onClose={toggleMicModal} />
       <SpeakerModal isOpen={isSpeakerModalOpen} onClose={toggleSpeakerModal} />
       <SpeedDial />
-      <AdSterra />
     </div>
   );
 };
