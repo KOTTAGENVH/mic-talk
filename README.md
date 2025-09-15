@@ -38,7 +38,6 @@
 │   │   ├── header.tsx
 │   │   ├── microphoneModal.tsx
 │   │   ├── speakerModal.tsx
-│   │   └── speedDial.tsx
 │   ├── contextApi
 │   │   ├── darkmodeContext.tsx
 │   │   ├── microphoneContext.tsx
