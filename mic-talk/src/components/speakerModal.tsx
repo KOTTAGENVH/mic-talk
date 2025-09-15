@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useSpeaker } from "@/contextApi/speakerContext";
 import { useTheme } from "@/contextApi/darkmodeContext";
+import { X } from "lucide-react";
 
 const SpeakerModal = ({
   isOpen,
@@ -13,7 +14,7 @@ const SpeakerModal = ({
 }) => {
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
   const [loading, setLoading] = useState(false);
-  const { setSelectedSpeaker } = useSpeaker();
+  const { selectedSpeaker, setSelectedSpeaker } = useSpeaker(); // ⬅️ include selectedSpeaker
   const { darkMode } = useTheme();
 
   useEffect(() => {
@@ -24,9 +25,6 @@ const SpeakerModal = ({
         const audioOutputDevices = devices.filter(
           (device) => device.kind === "audiooutput"
         );
-        if (audioOutputDevices.length === 0) {
-          console.warn("No audio output devices found");
-        }
         setDevices(audioOutputDevices);
       } catch (error) {
         console.error("Error fetching devices:", error);
@@ -42,49 +40,83 @@ const SpeakerModal = ({
   const handleSelectSpeaker = async (device: MediaDeviceInfo) => {
     setSelectedSpeaker(device);
     onClose();
-
     const mediaElement =
       document.querySelector("audio") || document.querySelector("video");
-    if (mediaElement && mediaElement.setSinkId && device.deviceId) {
+    if (mediaElement && "setSinkId" in mediaElement && device.deviceId) {
       try {
         await mediaElement.setSinkId(device.deviceId);
         console.log(`Audio output device set to ${device.label}`);
       } catch (error) {
         console.error("Failed to set audio output device:", error);
       }
-    } else {
-      console.error(
-        "setSinkId is not supported by this browser or media element is not found"
-      );
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="flex flex-col items-center justify-center rounded-lg p-4 shadow-lg relative bg-none backdrop-blur-xl border border-gray-200">
-        <h2
-          className={
+    <div
+      className={`fixed inset-0 z-[9999] ${
+        darkMode ? "bg-black/80" : "bg-white/80"
+      } flex justify-center items-center`}
+      onClick={onClose}
+    >
+      <div
+        className="relative flex flex-col items-center justify-center rounded-lg p-6 shadow-lg 
+                   bg-white/10 dark:bg-black/20 backdrop-blur-2xl"
+        onClick={(e) => e.stopPropagation()} // prevent modal from closing when clicking inside
+      >
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-200 hover:scale-110 ${
             darkMode
-              ? "text-white text-lg font-bold"
-              : "text-black text-lg font-bold"
-          }
+              ? "bg-white/10 hover:bg-white/20 text-white"
+              : "bg-white/30 hover:bg-white/50 text-slate-800"
+          }`}
+          aria-label="Close Modal"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        <h2
+          className={`text-lg font-bold ${
+            darkMode ? "text-white" : "text-black"
+          }`}
         >
           Select a Speaker
         </h2>
-        <ul className="w-full">
+
+        {/* Current speaker display */}
+        {selectedSpeaker && (
+          <p
+            className={`mt-2 mb-4 text-sm italic ${
+              darkMode ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
+            Currently using:{" "}
+            <span className="font-medium">
+              {selectedSpeaker.label || "Unnamed Speaker"}
+            </span>
+          </p>
+        )}
+
+        <ul className="w-full space-y-2">
           {loading ? (
             <li>Loading devices...</li>
           ) : devices.length > 0 ? (
             devices.map((device) => (
               <li
                 key={device.deviceId}
-                className={
-                  darkMode
-                    ? "text-white cursor-pointer hover:bg-blue-600"
-                    : "text-black cursor-pointer hover:bg-blue-400"
-                }
+                className={`cursor-pointer px-3 py-2 rounded-md transition ${
+                  selectedSpeaker?.deviceId === device.deviceId
+                    ? darkMode
+                      ? "bg-blue-600 text-white"
+                      : "bg-blue-400 text-black"
+                    : darkMode
+                    ? "text-white hover:bg-blue-600"
+                    : "text-black hover:bg-blue-400"
+                }`}
                 onClick={() => handleSelectSpeaker(device)}
               >
                 {device.label || "Unnamed Speaker"}
@@ -96,16 +128,6 @@ const SpeakerModal = ({
             </li>
           )}
         </ul>
-        <button
-          className={
-            darkMode
-              ? "text-white self-center justify-self-center cursor-pointer hover:bg-blue-600 mt-4 py-2 px-4 bg-blue-500 text-white rounded self-center"
-              : "text-black self-center justify-self-center cursor-pointer hover:bg-blue-400 mt-4 py-2 px-4 bg-blue-500 text-white rounded self-center"
-          }
-          onClick={onClose}
-        >
-          Close
-        </button>
       </div>
     </div>
   );

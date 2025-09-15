@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useMicrophone } from "@/contextApi/microphoneContext";
 import { useTheme } from "@/contextApi/darkmodeContext";
+import { X } from "lucide-react";
 
 const MicrophoneModal = ({
   isOpen,
@@ -12,7 +13,7 @@ const MicrophoneModal = ({
 }) => {
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
   const [loading, setLoading] = useState(false);
-  const { setSelectedMic } = useMicrophone();
+  const { selectedMic, setSelectedMic } = useMicrophone(); 
   const { darkMode } = useTheme();
 
   useEffect(() => {
@@ -39,29 +40,65 @@ const MicrophoneModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="flex flex-col items-center justify-center rounded-lg p-4 shadow-lg relative bg-none backdrop-blur-xl border border-gray-200">
-        <h2
-          className={
+    <div
+      className={`fixed inset-0 z-[9999] ${
+        darkMode ? "bg-black/80" : "bg-white/80"
+      } flex justify-center items-center`}
+      onClick={onClose}
+    >
+      <div
+        className="relative flex flex-col items-center justify-center rounded-lg p-6 shadow-lg 
+                   bg-white/10 dark:bg-black/20 backdrop-blur-2xl"
+        onClick={(e) => e.stopPropagation()} 
+      >
+        <button
+          onClick={onClose}
+          className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-200 hover:scale-110 ${
             darkMode
-              ? "text-white text-lg font-bold"
-              : "text-black text-lg font-bold"
-          }
+              ? "bg-white/10 hover:bg-white/20 text-white"
+              : "bg-white/30 hover:bg-white/50 text-slate-800"
+          }`}
+          aria-label="Close Modal"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        <h2
+          className={`text-lg font-bold ${
+            darkMode ? "text-white" : "text-black"
+          }`}
         >
           Select a Microphone
         </h2>
-        <ul className="w-full">
+        {selectedMic && (
+          <p
+            className={`mt-2 mb-4 text-sm italic ${
+              darkMode ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
+            Currently using:{" "}
+            <span className="font-medium">
+              {selectedMic.label || "Unnamed Microphone"}
+            </span>
+          </p>
+        )}
+
+        <ul className="w-full space-y-2">
           {loading ? (
             <li>Loading devices...</li>
           ) : devices.length > 0 ? (
             devices.map((device) => (
               <li
                 key={device.deviceId}
-                className={
-                  darkMode
-                    ? "text-white cursor-pointer hover:bg-blue-600"
-                    : "text-black cursor-pointer hover:bg-blue-400"
-                }
+                className={`cursor-pointer px-3 py-2 rounded-md transition ${
+                  selectedMic?.deviceId === device.deviceId
+                    ? darkMode
+                      ? "bg-blue-600 text-white"
+                      : "bg-blue-400 text-black"
+                    : darkMode
+                    ? "text-white hover:bg-blue-600"
+                    : "text-black hover:bg-blue-400"
+                }`}
                 onClick={() => handleSelectMic(device)}
               >
                 {device.label || "Unnamed Microphone"}
@@ -73,16 +110,6 @@ const MicrophoneModal = ({
             </li>
           )}
         </ul>
-        <button
-          className={
-            darkMode
-              ? "text-white self-center justify-self-center cursor-pointer hover:bg-blue-600 mt-4 py-2 px-4 bg-blue-500 text-white rounded self-center"
-              : "text-black self-center justify-self-center cursor-pointer hover:bg-blue-400 mt-4 py-2 px-4 bg-blue-500 text-white rounded self-center"
-          }
-          onClick={onClose}
-        >
-          Close
-        </button>
       </div>
     </div>
   );

@@ -1,83 +1,113 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
-import { BiSpeaker } from "react-icons/bi";
-import { FaMicrophoneAlt } from "react-icons/fa";
-import { CgDarkMode } from "react-icons/cg";
 import { useTheme } from "@/contextApi/darkmodeContext";
 import { useModal } from "@/contextApi/modalContext";
+import { Mic2, Moon, Sun, Volume2 } from "lucide-react";
 
 function Header() {
   const router = useRouter();
-  const { toggleDarkMode } = useTheme();
-  const { toggleMicModal } = useModal();
-  const { toggleSpeakerModal } = useModal();
-  const { darkMode } = useTheme();
+  const { toggleDarkMode, darkMode } = useTheme();
+  const { toggleMicModal, toggleSpeakerModal } = useModal();
 
   const handleLogoClick = () => {
     router.push("/");
   };
 
   return (
-    <div className="sticky top-0">
-      <nav className="flex items-center justify-between  bg-transparent bg-opacity-30 backdrop-blur-md p-2 ">
-        <div className="flex flex-row items-center flex-shrink-0 ">
-          <button
-            className={
-              darkMode
-                ? "text-white bg-transparent hover:bg-blue-600  font-bold py-2 px-4 rounded-lg"
-                : "text-black bg-transparent hover:bg-blue-400  font-bold py-2 px-4 rounded-lg"
-            }
-            onClick={toggleSpeakerModal}
-            aria-label="SpeakerChanger"
+       <div className="fixed top-0 left-0 w-full z-10">
+    <nav 
+      className={`
+        sticky  transition-all duration-300 ease-out w-full
+        ${darkMode 
+          ? "bg-transparent" 
+          : "bg-transparent"
+        } 
+        backdrop-blur-2xl shadow-lg
+      `}
+      style={{
+        backdropFilter: "blur(24px) saturate(180%)",
+        WebkitBackdropFilter: "blur(24px) saturate(180%)"
+      }}
+    >
+        <div className="max-w-7xl mx-auto px-3 lg:px-6">
+        <div className="flex items-center justify-between h-16">
+          <div 
+            className="flex-shrink-0 cursor-pointer group transition-transform duration-200 hover:scale-105"
+            onClick={handleLogoClick}
           >
-            <BiSpeaker />
-          </button>
-          <button
-            className={
-              darkMode
-                ? "text-white bg-transparent hover:bg-blue-600  font-bold py-2 px-4 rounded-lg"
-                : "text-black bg-transparent hover:bg-blue-400 font-bold py-2 px-4 rounded-lg"
-            }
-            onClick={toggleMicModal}
-            aria-label="MicrophoneChanger"
-          >
-            <FaMicrophoneAlt />
-          </button>
-          <button
-            className={
-              darkMode
-                ? "bg-transparent hover:bg-blue-600  font-bold py-2 px-4 rounded-lg text-white"
-                : "bg-transparent hover:bg-blue-400  font-bold py-2 px-4 rounded-lg text-black "
-            }
-            onClick={toggleDarkMode}
-            aria-label="DarkMode"
-          >
-            <CgDarkMode />
-          </button>
+            <div className="relative">
+              <div className={`
+                absolute inset-0 rounded-2xl transition-all duration-300 
+                ${darkMode 
+                  ? "bg-gradient-to-r from-blue-600/20 to-purple-600/20 group-hover:from-blue-500/30 group-hover:to-purple-500/30" 
+                  : "bg-gradient-to-r from-blue-400/20 to-purple-400/20 group-hover:from-blue-300/30 group-hover:to-purple-300/30"
+                } 
+                opacity-0 group-hover:opacity-100 blur-xl
+              `} />
+              <Image
+                src="/images/mic.jpg"
+                alt="Mic Talk"
+                width={40}
+                height={40}
+                className="relative rounded-2xl shadow-md transition-all duration-300 group-hover:shadow-xl"
+                priority
+              />
+            </div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <button
+        className={` p-2 rounded-2xl   ${darkMode
+            ? "bg-white/10 hover:bg-white/20 text-white"
+            : "bg-white/30 hover:bg-white/50 text-slate-800"
+            } backdrop-blur-sm`}
+              onClick={toggleSpeakerModal}
+              aria-label="Speaker Settings"
+            >
+              <Volume2 className="w-5 h-5 relative z-10" />
+            </button>
+            <button
+         className={` p-2 rounded-2xl   ${darkMode
+            ? "bg-white/10 hover:bg-white/20 text-white"
+            : "bg-white/30 hover:bg-white/50 text-slate-800"
+            } backdrop-blur-sm`}
+              onClick={toggleMicModal}
+              aria-label="Microphone Settings"
+            >
+              <Mic2 className="w-5 h-5 relative z-10" />
+            </button>
+
+            {/* Theme Toggle Button */}
+            <button
+        className={` p-2 rounded-2xl   ${darkMode
+            ? "bg-white/10 hover:bg-white/20 text-white"
+            : "bg-white/30 hover:bg-white/50 text-slate-800"
+            } backdrop-blur-sm`}
+              onClick={toggleDarkMode}
+              aria-label="Toggle Theme"
+            >              
+              <div className="relative z-10 w-5 h-5 flex items-center justify-center">
+                <Sun className={`
+                  absolute w-5 h-5 transition-all duration-300 
+                  ${darkMode 
+                    ? "opacity-100 rotate-0 scale-100" 
+                    : "opacity-0 rotate-180 scale-0"
+                  }
+                `} />
+                <Moon className={`
+                  absolute w-5 h-5 transition-all duration-300 
+                  ${darkMode 
+                    ? "opacity-0 -rotate-180 scale-0" 
+                    : "opacity-100 rotate-0 scale-100"
+                  }
+                `} />
+              </div>
+            </button>
+          </div>
         </div>
-        <div
-          className="flex justify-center mr-20 md:mr-40"
-          onClick={handleLogoClick}
-          style={{ cursor: "pointer" }}
-        >
-          <Image
-            src="/images/mic.jpg"
-            alt="Mic Talk"
-            width={40}
-            height={100}
-            style={{ borderRadius: "60%" }}
-          />
         </div>
-        <div className={darkMode ? "text-white" : "text-black"}>
-          <a
-            href="/legal"
-          >
-            T&C
-          </a>
-        </div>
-      </nav>
+    </nav>
     </div>
   );
 }
