@@ -11,23 +11,23 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "light_background": "url('/images/lightbackground.jpg')",
-        "dark_background": "url('/images/darkbackground.jpg')",
+        "light_background": "linear-gradient(to bottom, #536976, #BBD2C5)",
+        "dark_background": "linear-gradient(to bottom, #434343, #000000)", 
       },
       keyframes: {
         wave1: {
-          '0%': { backgroundColor: 'rgba(2,0,36,1)' }, 
+          '0%': { backgroundColor: 'rgba(2,0,36,1)' },
           '35%': { backgroundColor: 'rgba(29,139,130,1)' },
           '100%': { backgroundColor: 'rgba(0,212,255,1)' }
         },
         wave2: {
-          '0%': { backgroundColor: 'rgba(2,0,36,1))' }, 
+          '0%': { backgroundColor: 'rgba(2,0,36,1))' },
           '33%': { backgroundColor: 'rgba(29,40,139,1)' },
-          '100%': { backgroundColor: 'rgba(0,212,255,1)' } 
+          '100%': { backgroundColor: 'rgba(0,212,255,1)' }
         },
         wave3: {
-          '0%': { backgroundColor: 'rgba(0,0,0,1)' }, 
-          '50%': { backgroundColor: 'rgba(139,29,39,1)' }, 
+          '0%': { backgroundColor: 'rgba(0,0,0,1)' },
+          '50%': { backgroundColor: 'rgba(139,29,39,1)' },
           '100%': { backgroundColor: 'rgba(255,0,0,1)' }
         },
         gradientWave: {
@@ -42,7 +42,7 @@ const config: Config = {
         },
         barWave: {
           '0%, 100%': { transform: 'scaleY(0.5)' },
-          '50%': { transform: 'scaleY(1.5)' }  
+          '50%': { transform: 'scaleY(1.5)' }
         }
       },
       animation: {
@@ -52,7 +52,7 @@ const config: Config = {
         'gradient-wave': 'gradientWave 2s infinite ease-in-out',
         'bar-wave': 'barWave 2s ease-in-out infinite'
       },
-      animationDelay: { 
+      animationDelay: {
         200: '200ms',
         400: '400ms',
       },
