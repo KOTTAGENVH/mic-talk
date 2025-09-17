@@ -14,7 +14,7 @@ const SpeakerModal = ({
 }) => {
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
   const [loading, setLoading] = useState(false);
-  const { selectedSpeaker, setSelectedSpeaker } = useSpeaker(); // ⬅️ include selectedSpeaker
+  const { selectedSpeaker, setSelectedSpeaker } = useSpeaker(); 
   const { darkMode } = useTheme();
 
   useEffect(() => {
@@ -66,7 +66,6 @@ const SpeakerModal = ({
                    bg-white/10 dark:bg-black/20 backdrop-blur-2xl"
         onClick={(e) => e.stopPropagation()} // prevent modal from closing when clicking inside
       >
-        {/* Close Button */}
         <button
           onClick={onClose}
           className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-200 hover:scale-110 ${
@@ -86,8 +85,6 @@ const SpeakerModal = ({
         >
           Select a Speaker
         </h2>
-
-        {/* Current speaker display */}
         {selectedSpeaker && (
           <p
             className={`mt-2 mb-4 text-sm italic ${
