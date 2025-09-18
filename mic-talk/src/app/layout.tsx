@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {/* Ban inspect elements */}
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
               document.addEventListener("contextmenu", function(event) {
@@ -31,7 +31,7 @@ export default function RootLayout({
               });
             `,
           }}
-        />
+        /> */}
         <VolumeProvider>
           <SpeakerProvider>
             <ModalProvider>

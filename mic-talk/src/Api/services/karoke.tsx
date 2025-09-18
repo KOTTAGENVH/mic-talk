@@ -13,7 +13,6 @@ export const Karaoke = async (artist: any, song: any) => {
     const formattedSong = song.replace(/\s+/g, "_");
 
     const url = `/${formattedArtist}/${formattedSong}`;
-    console.log("Karaoke API URL:", url);
     const response = await apiClient.get(url);
     if (response.status !== 200) {
       console.error("Request failed:", response);
