@@ -9,8 +9,6 @@ import MicrophoneModal from "@/components/microphoneModal";
 import SpeakerModal from "@/components/speakerModal";
 
 
-
-
 function Page() {
   const { darkMode } = useTheme();
   const { isMicModalOpen, toggleMicModal } = useModal();
@@ -74,12 +72,12 @@ function Page() {
               11. Users are strictly prohibited from using Mic-Talk to harm others
               or engage in unlawful activities.
               <br />
-              13. Karaoke lyrics in Mic-Talk are sourced from{" "}
+              12. Karaoke lyrics in Mic-Talk are sourced from{" "}
               <a href="https://lyrics.ovh/">https://lyrics.ovh/</a>.
               <br />
-              14. Mic-Talk is only tested on Desktop Devices and on browsers like Chrome and Brave.
+              13. Mic-Talk is only tested on Desktop Devices and on browsers like Chrome and Brave.
               <br />
-              15. By using Mic-Talk you agree to the above mentioned terms and conditions.
+              14. By using Mic-Talk you agree to the above mentioned terms and conditions.
             </p>
           </div>
         </div>

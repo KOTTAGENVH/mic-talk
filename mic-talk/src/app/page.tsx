@@ -13,7 +13,7 @@ import { useVolume } from "@/contextApi/volumeContext";
 import { ClipboardPaste, Loader2, Mic, MicOff, Music, Search } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Karaoke } from "@/Api/services/karoke";
+import { Karaoke } from "@/api/services/karoke";
 import Footer from "@/components/footer";
 import { inter, roboto } from "./fonts";
 
@@ -296,7 +296,7 @@ useEffect(() => {
 
           <button
             onClick={handleClick}
-            className={`p-2 rounded-2xl transition-all duration-200 hover:scale-110 ${darkMode
+            className={`p-2 rounded-2xl ${darkMode
               ? "bg-white/10 hover:bg-white/20 text-white"
               : "bg-white/30 hover:bg-white/50 text-black"
               } backdrop-blur-sm`}
@@ -379,7 +379,7 @@ useEffect(() => {
                     }
                   });
                 }}
-                className={`p-2 rounded-xl transition-all duration-200 hover:scale-110 ${darkMode
+                className={`p-2 rounded-xl ${darkMode
                   ? "bg-white/10 hover:bg-white/20 text-white"
                   : "bg-white/30 hover:bg-white/50 text-black"
                   } backdrop-blur-sm`}
