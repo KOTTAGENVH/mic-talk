@@ -13,7 +13,7 @@ import { useVolume } from "@/contextApi/volumeContext";
 import { ClipboardPaste, Loader2, Mic, MicOff, Music, Search } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Karaoke } from "@/api/services/karoke";
+import { Karaoke } from "@/apis/services/karoke";
 import Footer from "@/components/footer";
 import { inter, roboto } from "./fonts";
 
