@@ -1,6 +1,4 @@
 "use client";
-import Image from "next/image";
-import React from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@/contextApi/darkmodeContext";
 import { useModal } from "@/contextApi/modalContext";
@@ -37,7 +35,7 @@ function Header() {
               className={` p-2 rounded-2xl   ${darkMode
                 ? "bg-white/10 hover:bg-white/20 text-white"
                 : "bg-white/30 hover:bg-white/50 text-slate-800"
-                } backdrop-blur-sm`}
+                } backdrop-blur-sm cursor-pointer`}
               onClick={handleLogoClick}
               aria-label="Microphone Settings"
             >
@@ -48,7 +46,7 @@ function Header() {
                 className={` p-2 rounded-2xl   ${darkMode
                   ? "bg-white/10 hover:bg-white/20 text-white"
                   : "bg-white/30 hover:bg-white/50 text-slate-800"
-                  } backdrop-blur-sm`}
+                  } backdrop-blur-sm cursor-pointer`}
                 onClick={toggleSpeakerModal}
                 aria-label="Speaker Settings"
               >
@@ -58,19 +56,17 @@ function Header() {
                 className={` p-2 rounded-2xl   ${darkMode
                   ? "bg-white/10 hover:bg-white/20 text-white"
                   : "bg-white/30 hover:bg-white/50 text-slate-800"
-                  } backdrop-blur-sm`}
+                  } backdrop-blur-sm cursor-pointer`}
                 onClick={toggleMicModal}
                 aria-label="Microphone Settings"
               >
                 <Mic2 className="w-5 h-5 relative z-10" />
               </button>
-
-              {/* Theme Toggle Button */}
               <button
                 className={` p-2 rounded-2xl   ${darkMode
                   ? "bg-white/10 hover:bg-white/20 text-white"
                   : "bg-white/30 hover:bg-white/50 text-slate-800"
-                  } backdrop-blur-sm`}
+                  } backdrop-blur-sm cursor-pointer`}
                 onClick={toggleDarkMode}
                 aria-label="Toggle Theme"
               >

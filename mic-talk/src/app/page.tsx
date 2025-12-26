@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import "../css/mic.css";
 import Header from "@/components/header";
 import { useTheme } from "@/contextApi/darkmodeContext";
@@ -51,7 +50,6 @@ export default function Home() {
     if (!artist || !song) {
       toast.error("Please enter an artist and a song");
     } else {
-      //Calling the Karoke API
       try {
         setIsLoading(true);
         const response: any = await Karaoke(artist, song);
@@ -157,121 +155,127 @@ export default function Home() {
     return () => window.removeEventListener("resize", resize);
   }, []);
 
-useEffect(() => {
-  let cancelled = false;
+  useEffect(() => {
+    let cancelled = false;
 
-  const setupAudio = async () => {
-    if (!isClicked) return;
+    const setupAudio = async () => {
+      if (!isClicked) return;
 
-    if (!audioContextRef.current) {
-      audioContextRef.current = new AudioContext();
-    } else if (audioContextRef.current.state === "suspended") {
-      try { await audioContextRef.current.resume(); } catch {}
-    }
-    const audioContext = audioContextRef.current!;
+      if (!audioContextRef.current) {
+        audioContextRef.current = new AudioContext();
+      } else if (audioContextRef.current.state === "suspended") {
+        try { await audioContextRef.current.resume(); } catch { }
+      }
+      const audioContext = audioContextRef.current!;
 
-    const analyser = audioContext.createAnalyser();
-    const gainNode = audioContext.createGain();
-    const destination = audioContext.createMediaStreamDestination();
+      const analyser = audioContext.createAnalyser();
+      const gainNode = audioContext.createGain();
+      const destination = audioContext.createMediaStreamDestination();
 
-    analyserRef.current = analyser;
-    gainNodeRef.current = gainNode;
-    destinationRef.current = destination;
+      analyserRef.current = analyser;
+      gainNodeRef.current = gainNode;
+      destinationRef.current = destination;
 
-    dataArrayRef.current = new Uint8Array(analyser.frequencyBinCount);
+      dataArrayRef.current = new Uint8Array(analyser.frequencyBinCount);
 
-    try {
-      const constraints: MediaStreamConstraints = {
-        audio: selectedMic
-          ? {
+      try {
+        const constraints: MediaStreamConstraints = {
+          audio: selectedMic
+            ? {
               deviceId: { exact: selectedMic.deviceId },
               echoCancellation: true,
               noiseSuppression: true,
               autoGainControl: true,
             }
-          : { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
-      };
+            : { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+        };
 
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
-      if (cancelled) { stream.getTracks().forEach(t => t.stop()); return; }
-      streamRef.current = stream;
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        if (cancelled) { stream.getTracks().forEach(t => t.stop()); return; }
+        streamRef.current = stream;
 
-      const source = audioContext.createMediaStreamSource(stream);
-      sourceRef.current = source;
+        const source = audioContext.createMediaStreamSource(stream);
+        sourceRef.current = source;
 
-      // mic -> analyser -> gain -> destination -> <audio>
-      source.connect(analyser);
-      analyser.connect(gainNode);
-      gainNode.connect(destination);
-      gainNode.gain.value = volume;
+        // mic -> analyser -> gain -> destination -> <audio>
+        source.connect(analyser);
+        analyser.connect(gainNode);
+        gainNode.connect(destination);
+        gainNode.gain.value = volume;
 
-      const audioEl = new Audio();
-      audioElRef.current = audioEl;
-      audioEl.srcObject = destination.stream;
+        const audioEl = new Audio();
+        audioElRef.current = audioEl;
+        audioEl.srcObject = destination.stream;
 
-      if (selectedSpeaker && "setSinkId" in audioEl) {
-        try { await (audioEl as any).setSinkId(selectedSpeaker.deviceId); }
-        catch (e) { console.warn("setSinkId failed; using default output.", e); }
+        if (selectedSpeaker && "setSinkId" in audioEl) {
+          try { await (audioEl as any).setSinkId(selectedSpeaker.deviceId); }
+          catch (e) { console.warn("setSinkId failed; using default output.", e); }
+        }
+        try { await audioEl.play(); } catch (e) {
+          // autoplay might be blocked until a user gesture; ignore
+          console.warn("Audio play blocked by browser.", e);
+        }
+
+        animateAudioVisualizer(); // reads analyserRef/dataArrayRef
+      } catch (err) {
+        console.error("Error accessing the microphone:", err);
       }
-      try { await audioEl.play(); } catch (e) {
-        // autoplay might be blocked until a user gesture; ignore
-        console.warn("Audio play blocked by browser.", e);
+    };
+
+    setupAudio();
+
+    return () => {
+      cancelled = true;
+
+      // stop the RAF loop (requestAnimationFrame)
+      if (requestAnimationRef.current) cancelAnimationFrame(requestAnimationRef.current);
+
+      // pause & detach <audio>
+      if (audioElRef.current) {
+        try { audioElRef.current.pause(); } catch { }
+        audioElRef.current.srcObject = null;
+        audioElRef.current = null;
       }
 
-      animateAudioVisualizer(); // reads analyserRef/dataArrayRef
-    } catch (err) {
-      console.error("Error accessing the microphone:", err);
-    }
-  };
+      // stop mic tracks
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(t => t.stop());
+        streamRef.current = null;
+      }
 
-  setupAudio();
+      // disconnect nodes before closing context
+      try {
+        sourceRef.current?.disconnect();
+        analyserRef.current?.disconnect();
+        gainNodeRef.current?.disconnect();
+        destinationRef.current?.disconnect();
+      } catch { }
 
-  return () => {
-    cancelled = true;
+      sourceRef.current = null;
+      analyserRef.current = null;
+      gainNodeRef.current = null;
+      destinationRef.current = null;
+      dataArrayRef.current = null;
 
-    // stop the RAF loop (requestAnimationFrame)
-    if (requestAnimationRef.current) cancelAnimationFrame(requestAnimationRef.current);
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+        audioContextRef.current = null;
+      }
+    };
+    // device id so it doesn't re-run on object identity changes
+  }, [isClicked, selectedMic?.deviceId, selectedSpeaker?.deviceId, volume]);
 
-    // pause & detach <audio>
-    if (audioElRef.current) {
-      try { audioElRef.current.pause(); } catch {}
-      audioElRef.current.srcObject = null;
-      audioElRef.current = null;
-    }
+  const lightBg =
+    "bg-[image:linear-gradient(to_bottom,_#536976,_#BBD2C5)]";
 
-    // stop mic tracks
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach(t => t.stop());
-      streamRef.current = null;
-    }
-
-    // disconnect nodes before closing context
-    try {
-      sourceRef.current?.disconnect();
-      analyserRef.current?.disconnect();
-      gainNodeRef.current?.disconnect();
-      destinationRef.current?.disconnect();
-    } catch {}
-
-    sourceRef.current = null;
-    analyserRef.current = null;
-    gainNodeRef.current = null;
-    destinationRef.current = null;
-    dataArrayRef.current = null;
-
-    if (audioContextRef.current) {
-      audioContextRef.current.close();
-      audioContextRef.current = null;
-    }
-  };
-  // device id's so it doesn't re-run on object identity changes
-}, [isClicked, selectedMic?.deviceId, selectedSpeaker?.deviceId, volume]);
+  const darkBg =
+    "bg-[image:linear-gradient(to_bottom,_#434343,_#000000)]";
 
   return (
     <div
       className={`${darkMode
-        ? "bg-dark_background bg-cover min-h-screen w-full flex flex-col"
-        : "bg-light_background bg-cover min-h-screen w-full flex flex-col"
+        ? ` bg-cover min-h-screen w-full flex flex-col ${darkBg}`
+        : ` bg-cover min-h-screen w-full flex flex-col ${lightBg}`
         }`}
     >
       <Header />
@@ -330,23 +334,11 @@ useEffect(() => {
             placeholder="Search Song"
             onChange={(e) => setSong(e.target.value)}
           />
+        </div>
+        <div className="h-auto w-full flex justify-center items-center py-2 md:py-4">
           <button
             onClick={handleSearch}
             className={` p-2 rounded-2xl   ${darkMode
-              ? "bg-white/10 hover:bg-white/20 text-white"
-              : "bg-white/30 hover:bg-white/50 text-black"
-              } backdrop-blur-sm hidden md:block`}
-            aria-label="Search"
-            disabled={isLoading}
-          >
-            <Search className="w-6 h-6" />
-          </button>
-        </div>
-        <div className="h-auto w-full flex justify-center items-center py-2 md:py-4">
-
-          <button
-            onClick={handleSearch}
-            className={`md:hidden p-2 rounded-2xl   ${darkMode
               ? "bg-white/10 hover:bg-white/20 text-white"
               : "bg-white/30 hover:bg-white/50 text-black"
               } backdrop-blur-sm`}

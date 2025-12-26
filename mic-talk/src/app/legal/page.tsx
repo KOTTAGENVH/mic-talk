@@ -1,7 +1,6 @@
 "use client";
 import Header from "@/components/header";
 import { useTheme } from "@/contextApi/darkmodeContext";
-import React from "react";
 import { inter, roboto } from "@/app/fonts";
 import Footer from "@/components/footer";
 import { useModal } from "@/contextApi/modalContext";
@@ -13,11 +12,19 @@ function Page() {
   const { darkMode } = useTheme();
   const { isMicModalOpen, toggleMicModal } = useModal();
   const { isSpeakerModalOpen, toggleSpeakerModal } = useModal();
+
+  const lightBg =
+    "bg-[image:linear-gradient(to_bottom,_#536976,_#BBD2C5)]";
+
+  const darkBg =
+    "bg-[image:linear-gradient(to_bottom,_#434343,_#000000)]";
+
+
   return (
     <div
       className={`${darkMode
-        ? "bg-dark_background bg-cover min-h-screen w-full flex flex-col"
-        : "bg-light_background bg-cover min-h-screen w-full flex flex-col"
+        ? ` bg-cover min-h-screen w-full flex flex-col ${darkBg}`
+        : ` bg-cover min-h-screen w-full flex flex-col ${lightBg}`
         }`}
     >
       <Header />
@@ -27,7 +34,7 @@ function Page() {
             className={
               darkMode
                 ? "text-white bg-opacity-50 backdrop-blur-md w-full mt-8 p-8 rounded-2xl overflow-y-auto"
-                : "text-black bg-opacity-50 backdrop-blur-md w-full mt-8 p-8 rounded-2xl overflow-y-auto"
+                : "text-black bg-opacity-50 backdrop-blur-md w-full mt-8 p-8 rounded-2xl overflow-y-auto "
             }
           >
             <p
@@ -73,7 +80,7 @@ function Page() {
               11. Karaoke lyrics in Mic-Talk are sourced from{" "}
               <a href="https://lyrics.ovh/">https://lyrics.ovh/</a>.
               <br />
-              12. Mic-Talk is only tested on Desktop Devices and on browsers like Chrome and Brave.
+              12. Mic-Talk is tested on Desktop and Mobile (iPhone XR) Devices and on browsers like Chrome and Brave.
               <br />
               13. By using Mic-Talk you agree to the above mentioned terms and conditions.
             </p>

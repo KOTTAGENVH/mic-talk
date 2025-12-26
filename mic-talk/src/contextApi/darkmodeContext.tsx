@@ -1,19 +1,16 @@
 "use client";
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
-// Define the type for the theme context state
 interface ThemeContextState {
   darkMode: boolean;
   toggleDarkMode: () => void;
 }
 
-// Create the context with default values
 const ThemeContext = createContext<ThemeContextState>({
   darkMode: false,
   toggleDarkMode: () => { },
 });
 
-// Create a provider component
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [darkMode, setDarkMode] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -44,5 +41,4 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   );
 };
 
-// Custom hook to use the theme context
 export const useTheme = () => useContext(ThemeContext);
