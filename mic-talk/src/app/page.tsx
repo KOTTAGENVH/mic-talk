@@ -303,7 +303,7 @@ export default function Home() {
             className={`p-2 rounded-2xl ${darkMode
               ? "bg-white/10 hover:bg-white/20 text-white"
               : "bg-white/30 hover:bg-white/50 text-black"
-              } backdrop-blur-sm`}
+              } backdrop-blur-sm cursor-pointer`}
             aria-label="Microphone"
           >
             {isClicked ? (
@@ -341,7 +341,7 @@ export default function Home() {
             className={` p-2 rounded-2xl   ${darkMode
               ? "bg-white/10 hover:bg-white/20 text-white"
               : "bg-white/30 hover:bg-white/50 text-black"
-              } backdrop-blur-sm`}
+              } backdrop-blur-sm cursor-pointer`}
             aria-label="Search"
             disabled={isLoading}
           >
@@ -374,7 +374,7 @@ export default function Home() {
                 className={`p-2 rounded-xl ${darkMode
                   ? "bg-white/10 hover:bg-white/20 text-white"
                   : "bg-white/30 hover:bg-white/50 text-black"
-                  } backdrop-blur-sm`}
+                  } backdrop-blur-sm cursor-pointer`}
                 title="Paste lyrics from clipboard"
               >
                 <ClipboardPaste className="w-5 h-5" />
