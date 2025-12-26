@@ -53,7 +53,7 @@ const MicrophoneModal = ({
       >
         <button
           onClick={onClose}
-          className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-200 hover:scale-110 ${
+          className={`absolute top-3 right-3 p-2 rounded-full transition-all duration-200 hover:scale-110 cursor-pointer ${
             darkMode
               ? "bg-white/10 hover:bg-white/20 text-white"
               : "bg-white/30 hover:bg-white/50 text-slate-800"
