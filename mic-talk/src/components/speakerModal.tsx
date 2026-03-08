@@ -62,7 +62,7 @@ const SpeakerModal = ({
       onClick={onClose}
     >
       <div
-        className="relative flex flex-col items-center justify-center rounded-lg p-6 shadow-lg 
+        className="relative flex flex-col items-center justify-center rounded-lg p-6 pt-12 min-w-[320px] shadow-lg 
                    bg-white/10 dark:bg-black/20 backdrop-blur-2xl"
         onClick={(e) => e.stopPropagation()} // prevent modal from closing when clicking inside
       >
